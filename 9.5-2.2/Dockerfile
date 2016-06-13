@@ -1,8 +1,13 @@
 FROM postgres:9.5
 MAINTAINER Gael Abadin (github.com/elcodedocle)
 
+ENV POSTGRES_MAJOR 9.5
 ENV POSTGIS_MAJOR 2.2
 ENV POSTGIS_VERSION 2.2.2+dfsg-1.pgdg80+1
+
+ENV PG_CONF_DIR /etc/postgresql/9.5/main
+ENV PG_CONF postgresql.conf
+ENV PG_CONF_HBA pg_hba.conf
 
 RUN apt-get update \
       && apt-get install -y --no-install-recommends \
@@ -10,8 +15,20 @@ RUN apt-get update \
            postgis=$POSTGIS_VERSION \
       && rm -rf /var/lib/apt/lists/*
 
-ADD config.sh /config.sh
-RUN chmod 0755 /config.sh
-RUN /config.sh
+RUN chmod 600 /etc/ssl/private/ssl-cert-snakeoil.key
+
+# Restrict subnet to IPv4 private networks
+RUN echo "host    all             all             172.16.0.0/12               md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+RUN echo "host    all             all             10.0.0.0/8                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+RUN echo "host    all             all             192.168.0.0/16                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+RUN echo "host    all             all             169.254.0.0/16                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+# Listen on all ip addresses
+RUN echo "listen_addresses = '*'" >> $PG_CONF_DIR/$PG_CONF
+RUN echo "port = 5432" >> $PG_CONF_DIR/$PG_CONF
+
+# Enable ssl
+RUN echo "ssl = true" >> $PG_CONF
+RUN echo "ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'" >> $PG_CONF_DIR/$PG_CONF
+RUN echo "ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'" >> $PG_CONF_DIR/$PG_CONF
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
