@@ -23,6 +23,7 @@ for version in "${versions[@]}"; do
 		cp Dockerfile.template initdb-postgis.sh README.md "$version/"
 		mv "$version/Dockerfile.template" "$version/Dockerfile"
 		sed -i 's/%%PG_MAJOR%%/'$pg_major'/g; s/%%POSTGIS_MAJOR%%/'$postgis_major'/g; s/%%POSTGIS_VERSION%%/'$fullVersion'/g' "$version/Dockerfile"
+		sed -i 's/%%PG_MAJOR%%/'$pg_major'/g; s/%%POSTGIS_MAJOR%%/'$postgis_major'/g; s/%%POSTGIS_VERSION%%/'$fullVersion'/g' "$version/config.sh"
 	)
 done
 
