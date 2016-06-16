@@ -21,3 +21,18 @@ for DB in template_postgis "$POSTGRES_DB"; do
 		CREATE EXTENSION postgis_tiger_geocoder;
 EOSQL
 done
+
+
+# Restrict subnet to IPv4 private networks
+echo "host    all             all             172.16.0.0/12               md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+echo "host    all             all             10.0.0.0/8                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+echo "host    all             all             192.168.0.0/16                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+echo "host    all             all             169.254.0.0/16                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
+# Listen on all ip addresses
+echo "listen_addresses = '*'" >> $PG_CONF_DIR/$PG_CONF
+echo "port = 5432" >> $PG_CONF_DIR/$PG_CONF
+
+# Enable ssl
+echo "ssl = true" >> $PG_CONF
+echo "ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'" >> $PG_CONF_DIR/$PG_CONF
+echo "ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'" >> $PG_CONF_DIR/$PG_CONF
