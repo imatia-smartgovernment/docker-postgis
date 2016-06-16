@@ -16,6 +16,12 @@ RUN apt-get update \
       && rm -rf /var/lib/apt/lists/*
 
 RUN gpasswd -a postgres ssl-cert
+RUN cp -r /etc/ssl /tmp/ssl-copy/
+RUN chmod -R 0700 /etc/ssl
+RUN chown -R postgres /tmp/ssl-copy
+RUN rm -r /etc/ssl
+RUN mv /tmp/ssl-copy /etc/ssl
 RUN chmod 600 /etc/ssl/private/ssl-cert-snakeoil.key
+
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY ./initdb-postgis.sh /docker-entrypoint-initdb.d/postgis.sh
