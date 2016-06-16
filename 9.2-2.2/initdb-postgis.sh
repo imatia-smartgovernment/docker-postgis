@@ -35,7 +35,7 @@ echo "port = 5432" >> $PG_CONF_DIR/$PG_CONF
 
 # Enable ssl on postgres != 9.1
 if [ "$POSTGRES_MAJOR" != '9.1' ]; then
-  echo "ssl = true" >> $PG_CONF
+  echo "ssl = true" >> $PG_CONF_DIR/$PG_CONF
   echo "ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'" >> $PG_CONF_DIR/$PG_CONF
   echo "ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'" >> $PG_CONF_DIR/$PG_CONF
 fi
