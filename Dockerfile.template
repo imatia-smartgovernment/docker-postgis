@@ -15,6 +15,7 @@ RUN apt-get update \
            postgis=$POSTGIS_VERSION \
       && rm -rf /var/lib/apt/lists/*
 
+RUN gpasswd -a postgres ssl-cert
 RUN chmod 600 /etc/ssl/private/ssl-cert-snakeoil.key
 
 RUN mkdir -p /docker-entrypoint-initdb.d
