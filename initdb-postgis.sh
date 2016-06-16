@@ -24,6 +24,7 @@ done
 
 
 # Restrict subnet to IPv4 private networks
+sed -i '$ d' $PG_CONF_DIR/$PG_CONF_HBA
 echo "host    all             all             172.16.0.0/12               md5" >> $PG_CONF_DIR/$PG_CONF_HBA
 echo "host    all             all             10.0.0.0/8                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
 echo "host    all             all             192.168.0.0/16                 md5" >> $PG_CONF_DIR/$PG_CONF_HBA
