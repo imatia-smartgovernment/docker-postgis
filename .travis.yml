@@ -16,7 +16,7 @@ install:
 before_script:
   - env | sort
   - cd "$VERSION"
-  - image="elcodedocle/docker-postgis:$VERSION"
+  - image="imatia/docker-postgis:$VERSION"
 
 script:
   - docker build --pull -t "$image" .
