@@ -1,5 +1,5 @@
-testAlias[elcodedocle/docker-postgis]=postgres
+testAlias[imatia/docker-postgis]=postgres
 
-imageTests[elcodedocle/docker-postgis]='
+imageTests[imatia/docker-postgis]='
 	postgis-basics
 '
