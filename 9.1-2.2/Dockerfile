@@ -11,8 +11,7 @@ ENV PG_CONF_HBA pg_hba.conf
 
 RUN apt-get update \
       && apt-get install -y --no-install-recommends \
-           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR=$POSTGIS_VERSION \
-           postgis=$POSTGIS_VERSION \
+           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
       && rm -rf /var/lib/apt/lists/*
 
 RUN gpasswd -a postgres ssl-cert
