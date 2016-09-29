@@ -4,7 +4,7 @@ language: bash
 dist: trusty
 
 env:
-  - VERSION=latest
+  - VERSION=9.5-2.2
 
 install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
@@ -12,7 +12,7 @@ install:
 before_script:
   - env | sort
   - cd "$VERSION"
-  - image="imatia/docker-postgis:$VERSION"
+  - image="imatia/docker-postgis:latest"
 
 script:
   - docker build --pull -t "$image" .
