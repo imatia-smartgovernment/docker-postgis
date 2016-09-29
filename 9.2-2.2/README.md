@@ -1,4 +1,4 @@
-# elcodedocle/docker-postgis
+# imatia/docker-postgis
 
 [![Build Status](https://travis-ci.org/imatia-smartgovernment/docker-postgis.svg)](https://travis-ci.org/imatia-smartgovernment/docker-postgis)
 
