@@ -4,6 +4,10 @@ language: bash
 dist: trusty
 
 env:
+  - VERSION=9.1-2.2
+  - VERSION=9.2-2.2
+  - VERSION=9.3-2.2
+  - VERSION=9.4-2.2
   - VERSION=9.5-2.2
 
 install:
@@ -12,7 +16,7 @@ install:
 before_script:
   - env | sort
   - cd "$VERSION"
-  - image="imatia/docker-postgis:latest"
+  - image="imatia/docker-postgis:$VERSION"
 
 script:
   - docker build --pull -t "$image" .
